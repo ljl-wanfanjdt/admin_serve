@@ -1,0 +1,8 @@
+const app = require('../src/app')
+
+const config = require('../src/conf/config')
+
+// 创建服务
+app.listen(config.APP_PORT, () => {
+  console.log(`服务器已开启---${config.APP_HOST}:${config.APP_PORT}`)
+})
