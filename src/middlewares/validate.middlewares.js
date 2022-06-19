@@ -7,7 +7,6 @@
 const getUserValidate = (validatorFn) => {
   async function validatorMiddleware(ctx, next) {
     const data = ctx.request.body
-    console.log(data);
     const error = validatorFn(data)
     if (error) {
 
