@@ -1,5 +1,7 @@
 const app = require('../src/app')
 
+// 连接数据库
+require('../src/conf/database')
 const config = require('../src/conf/config')
 
 // 创建服务
