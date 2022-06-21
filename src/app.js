@@ -4,6 +4,9 @@ const bodyParser = require('koa-bodyparser')
 // 导入路由
 const router = require('./router/index')
 
+// 导入同一错误处理
+const errorHandler = require('./conf/error-handle')
+
 // 创建app
 const app = new Koa()
 
@@ -24,9 +27,5 @@ app.router = router
 app.router()
 
 // 捕获异常方式二
-app.on('error', (err, ctx) => {
-  console.error('server error')
-  // 这部分抽成统一异常处理
-  console.log(err.message)
-})
+app.on('error', errorHandler)
 module.exports = app

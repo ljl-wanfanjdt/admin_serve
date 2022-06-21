@@ -5,6 +5,7 @@
  */
 const userService = require('../services/user.service')
 const handlePassword = require('../utils/password.encrypt')
+const errorTypes = require('../constants/error-types');
 /**
  * @description 用户注册,是否重复注册
  */
@@ -16,7 +17,7 @@ async function verifyRepregister(ctx, next) {
   // request.length>1 说明注册过
   if (request.length) {
     // ctx.throw(409)
-    const error = new Error('用户名已经存在');
+    const error = new Error(errorTypes.USER_ALREADY_EXISTS);
     return ctx.app.emit('error', error, ctx);
   }
   await next()
