@@ -27,6 +27,6 @@ app.router()
 app.on('error', (err, ctx) => {
   console.error('server error')
   // 这部分抽成统一异常处理
-  console.log(err.message);
+  console.log(err.message)
 })
 module.exports = app

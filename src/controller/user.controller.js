@@ -7,7 +7,7 @@ class UserController {
     const userInfo = ctx.request.body
     const result = await createUser(userInfo)
     // 返回数据
-    ctx.body = result;
+    ctx.body = result
   }
 }
 
