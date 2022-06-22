@@ -9,7 +9,7 @@ const config = require('./config')
 const { MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PASSEORD, MYSQL_DATABASE } = config
 const connections = mysql.createPool({
   host: MYSQL_HOST,
-  user: MYSQL_PORT,
+  port: MYSQL_PORT,
   database: MYSQL_DATABASE,
   user: MYSQL_USER,
   password: MYSQL_PASSEORD,
@@ -19,13 +19,18 @@ const connections = mysql.createPool({
 })
 
 connections.getConnection((err, coon) => {
-  coon.connect((err) => {
-    if (err) {
-      console.log("连接失败:", err)
-    } else {
-      console.log("数据库连接成功~")
-    }
-  })
+  try {
+    coon.connect((err) => {
+      if (err) {
+        console.log("连接失败:", err)
+      } else {  
+        console.log("数据库连接成功~")
+      }
+    })
+  } catch (error) {
+    console.error("数据库连接失败，请检查，error:"+error)
+  }
+  
 })
 
 module.exports = connections.promise()
