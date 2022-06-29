@@ -16,9 +16,15 @@ const USER_SCHEMA = {
       type: 'string',
       maxLength: 255,
       minLength: 3
+    },
+    fullName: {
+      type: 'string',
+      pattern: '^[\u4e00-\u9fa5]{0,}$',
+      maxLength: 255,
+      minLength: 3
     }
   },
-  // required: ['userName', 'password']
+  required: ['userName', 'password', 'fullName']
 }
 
 /**
