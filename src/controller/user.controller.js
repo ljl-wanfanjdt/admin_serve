@@ -1,7 +1,7 @@
 /**
  * @description 用户 controller    
  */
-const { createUser, queryUser } = require('../services/user.service')
+const { createUser, queryUser, setPassword } = require('../services/user.service')
 class UserController {
   async create(ctx, next) {
     const userInfo = ctx.request.body
@@ -14,6 +14,12 @@ class UserController {
   async queryUserList(ctx, next) {
     const queryParams = ctx.request.body
     const result = await queryUser(queryParams)
+    ctx.body = result
+  }
+
+  //修改用户密码
+  async ChangePassword(ctx, next) {
+    const result = await setPassword(ctx.request.body)
     ctx.body = result
   }
 }

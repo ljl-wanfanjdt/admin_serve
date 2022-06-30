@@ -35,8 +35,30 @@ async function cryptPassword(ctx, next) {
   await next()
 }
 
+// 密码验证
+async function verifyPassword(ctx, next) {
+  const userName = ctx.request.body
+  const res = await userService.getPassword(userName)
+  if (ctx.request.body.password == res[0].password) {
+    await next()
+  } else {
+    ctx.app.emit('error', error, ctx)
+  }
+}
 
+//新旧密码验证 
+async function VerifyNewPassword(ctx, next) {
+  const { newPasswordFirst, newPasswordSecond } = ctx.request.body
+  if (newPasswordFirst === newPasswordSecond) {
+    ctx.request.body.password = handlePassword(newPasswordFirst)
+    await next()
+  } else {
+     return ctx.app.emit('error', error, ctx);
+  }
+}
 module.exports = {
   verifyRepregister,
-  cryptPassword
+  cryptPassword,
+  verifyPassword,
+  VerifyNewPassword
 }

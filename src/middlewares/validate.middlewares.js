@@ -9,7 +9,7 @@ const getUserValidate = (validatorFn) => {
     const data = ctx.request.body
     const error = validatorFn(data)
     if (error) {
-
+      console.log(error);
       // 验证失败
       ctx.body = '验证失败'
       return

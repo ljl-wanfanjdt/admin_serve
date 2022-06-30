@@ -21,12 +21,23 @@ const USER_SCHEMA = {
       type: 'string',
       pattern: '^[\u4e00-\u9fa5]{0,}$',
       maxLength: 255,
-      minLength: 3
+      minLength: 2
     }
   },
   required: ['userName', 'password', 'fullName']
 }
 
+const PASSWORD_SCHEMA = {
+  type: 'object',
+  properties: {
+    password: {
+      type: 'string',
+      maxLength: 255,
+      minLength: 3
+    },
+  },
+  required: ['password']
+}
 /**
  * @description 校验用户信息
  * @author ljl
@@ -37,4 +48,10 @@ function userValidator(data = {}) {
   return validator(USER_SCHEMA, data)
 }
 
-module.exports = userValidator
+function passwordValidator(data = {}) {
+  return validator(PASSWORD_SCHEMA, data)
+}
+module.exports = {
+  userValidator,
+  passwordValidator
+}
