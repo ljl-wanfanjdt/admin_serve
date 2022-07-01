@@ -35,7 +35,11 @@ async function cryptPassword(ctx, next) {
   await next()
 }
 
-// 密码验证
+/**
+ * @description 原密码验证中间件
+ * @param {object} ctx 上下文
+ * @param {function} next 下一个中间件
+ */
 async function verifyPassword(ctx, next) {
   const userName = ctx.request.body
   const res = await userService.getPassword(userName)
@@ -46,7 +50,11 @@ async function verifyPassword(ctx, next) {
   }
 }
 
-//新旧密码验证 
+/**
+ * @description 两次新密码验证中间件
+ * @param {object} ctx 上下文
+ * @param {function} next 下一个中间件
+ */
 async function VerifyNewPassword(ctx, next) {
   const { newPasswordFirst, newPasswordSecond } = ctx.request.body
   if (newPasswordFirst === newPasswordSecond) {

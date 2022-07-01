@@ -48,6 +48,12 @@ function userValidator(data = {}) {
   return validator(USER_SCHEMA, data)
 }
 
+/**
+ * @description 密码校验
+ * @author mllms
+ * @param {object} data 用户信息
+ */
+
 function passwordValidator(data = {}) {
   return validator(PASSWORD_SCHEMA, data)
 }

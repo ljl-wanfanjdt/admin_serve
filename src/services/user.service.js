@@ -42,16 +42,34 @@ class UserService {
     return handleSql(statement)
   }
 
+  /**
+ * @description 根据用户名获取用户密码
+ * @returns 数据库操作结果
+ */
   async getPassword(params) {
     const { userName } = params
     let statement = `SELECT password FROM user_info WHERE user_name = ?;`
     return executeSql(statement, [userName])
   }
 
+  /**
+ * @description 设置用户密码
+ * @returns 数据库操作结果
+ */
   async setPassword(params) {
-    const { userName,password } = params
-    let statement = `UPDATE user_info SET password = ? WHERE user_name = '${userName}';`
+    const { userName,password,userId } = params
+    let statement = `UPDATE user_info SET password = ? WHERE user_name = '${userName}' AND id=${userId};`
     return executeSql(statement, [password])
+  }
+
+  /**
+ * @description 设置用户密码
+ * @returns 数据库操作结果
+ */
+  async disableUser(params) {
+    const { userName,disable,userId } = params
+    let statement = `UPDATE user_info SET disable = ? WHERE user_name = '${userName}' AND id=${userId};`
+    return executeSql(statement, [disable])
   }
 }
 
