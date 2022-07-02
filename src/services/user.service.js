@@ -8,13 +8,13 @@ class UserService {
     return executeSql(statement, [name])
   }
   async createUser(userInfo) {
-    const { userName: user_name, password, age, telPhone: tel_phone, gender = 'M' } = userInfo
+    const { userName: user_name, password, age, telPhone: tel_phone, gender = 'M',fullName:full_name } = userInfo
     const statement = `
     INSERT INTO 
-      user_info (user_name,password,age,tel_phone,gender) 
+      user_info (user_name,password,age,tel_phone,gender,full_name) 
     VALUES 
-      (?,?,?,?,?);`
-    return executeSql(statement, [user_name, password, age, tel_phone, gender])
+      (?,?,?,?,?,?);`
+    return executeSql(statement, [user_name, password, age, tel_phone, gender,full_name])
   }
   async queryUser(queryParams) {
     const { fullName = '', telPhone = '', occupationv = '', userId = '' } = queryParams
@@ -40,6 +40,36 @@ class UserService {
     }
     statement += `order by create_time desc;`
     return handleSql(statement)
+  }
+
+  /**
+ * @description 根据用户名获取用户密码
+ * @returns 数据库操作结果
+ */
+  async getPassword(params) {
+    const { userName } = params
+    let statement = `SELECT password FROM user_info WHERE user_name = ?;`
+    return executeSql(statement, [userName])
+  }
+
+  /**
+ * @description 设置用户密码
+ * @returns 数据库操作结果
+ */
+  async setPassword(params) {
+    const { userName,password,userId } = params
+    let statement = `UPDATE user_info SET password = ? WHERE user_name = '${userName}' AND id=${userId};`
+    return executeSql(statement, [password])
+  }
+
+  /**
+ * @description 设置用户密码
+ * @returns 数据库操作结果
+ */
+  async disableUser(params) {
+    const { userName,disable,userId } = params
+    let statement = `UPDATE user_info SET disable = ? WHERE user_name = '${userName}' AND id=${userId};`
+    return executeSql(statement, [disable])
   }
 }
 

@@ -6,6 +6,8 @@ const mysql = require('mysql2')
 
 const config = require('./config')
 
+const log = require('./log4js.config')
+
 const { MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PASSEORD, MYSQL_DATABASE } = config
 const connections = mysql.createPool({
   host: MYSQL_HOST,
@@ -20,10 +22,10 @@ const connections = mysql.createPool({
 
 connections.getConnection((err, coon) => {
   if (err) {
-    console.log("数据库连接失败，请检查，error:" + err)
+    log.error("数据库连接失败，请检查，error:" + err)
     return
   } else {
-    console.log("数据库连接成功~")
+    log.info("数据库连接成功~")
   }
 })
 

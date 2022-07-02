@@ -1,5 +1,4 @@
-const jwt = require('jsonwebtoken')
-const { getUserName, getPassword } = require('../services/user.service')
+const { getUserName } = require('../services/user.service')
 const errorTypes = require('../constants/error-types')
 const handlePassword = require('../utils/password.encrypt')
 async function verifyUserLogin(ctx, next) {

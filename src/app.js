@@ -7,6 +7,8 @@ const router = require('./router/index')
 // 导入同一错误处理
 const errorHandler = require('./conf/error-handle')
 
+// 引入log4js
+const log = require('./conf/log4js.config')
 // 创建app
 const app = new Koa()
 
@@ -19,7 +21,17 @@ const app = new Koa()
 //     console.log(error.message)
 //   }
 // })
+
+
+
 app.use(bodyParser())
+
+app.use(async (ctx, next) => {
+  // log.info(`get params:${JSON.stringify(ctx.request.query)}`)
+  log.info(`method:${ctx.request.method} url:${ctx.request.url} params:${JSON.stringify(ctx.request.body)}`)
+
+  await next()
+})
 //挂载路由
 app.router = router
 
