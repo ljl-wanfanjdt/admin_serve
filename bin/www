@@ -4,7 +4,9 @@ const app = require('../src/app')
 require('../src/conf/database')
 const config = require('../src/conf/config')
 
+const log = require('../src/conf/log4js.config')
+
 // 创建服务
 app.listen(config.APP_PORT, () => {
-  console.log(`服务器已开启---${config.APP_HOST}:${config.APP_PORT}`)
+  log.debug(`服务器已开启---${config.APP_HOST}:${config.APP_PORT}`)
 })

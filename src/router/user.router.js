@@ -2,7 +2,7 @@ const Router = require('koa-router')
 const userRouter = new Router({ prefix: '/user' })
 
 const getValidator = require('../middlewares/validate.middlewares')
-const {userValidator, passwordValidator} = require('../validator/user.validate')
+const { userValidator, passwordValidator } = require('../validator/user.validate')
 const { create, queryUserList, ChangePassword, userDisable } = require('../controller/user.controller')
 const { verifyRepregister, cryptPassword, verifyPassword, VerifyNewPassword } = require('../middlewares/user.middlewares')
 userRouter.post('/', (ctx, next) => {
@@ -24,7 +24,7 @@ userRouter.post('/modify/userInfo', getValidator(userValidator), verifyRepregist
 *"newPasswordFirst"
 *"newPasswordSecond"
 */
-userRouter.post('/modify/userPasword',cryptPassword,verifyPassword,getValidator(passwordValidator),VerifyNewPassword,ChangePassword)
+userRouter.post('/modify/userPasword', cryptPassword, verifyPassword, getValidator(passwordValidator), VerifyNewPassword, ChangePassword)
 
 //管理员重置密码路由
 /*
@@ -33,7 +33,7 @@ userRouter.post('/modify/userPasword',cryptPassword,verifyPassword,getValidator(
 *"userId"
 *"password" 此处password为默认密码
 */
-userRouter.post('/reset/pasword',cryptPassword,ChangePassword)
+userRouter.post('/reset/pasword', cryptPassword, ChangePassword)
 
 // 用户开启/禁用开关路由
 /*
@@ -42,10 +42,9 @@ userRouter.post('/reset/pasword',cryptPassword,ChangePassword)
 *"userId"
 *"disable" 
 */
-userRouter.post('/disable',userDisable)
+userRouter.post('/disable', userDisable)
 
 // 获取用户列表
-console.log(queryUserList);
 userRouter.post('/getUserList', queryUserList)
 
 module.exports = userRouter

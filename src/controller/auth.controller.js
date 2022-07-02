@@ -8,12 +8,10 @@ const { PRIVATE_KEY } = require('../conf/config')
 class AuthController {
   async login(ctx, next) {
     const { id, user_name: userName } = ctx.user
-    console.log(PRIVATE_KEY);
     const token = jwt.sign({ id, userName }, PRIVATE_KEY, {
       expiresIn: 60 * 60 * 24,
       algorithm: 'RS256'
     });
-    console.log(token);
     ctx.body = { id, userName, token }
   }
 
