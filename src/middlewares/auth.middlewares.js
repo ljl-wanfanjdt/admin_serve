@@ -49,7 +49,6 @@ async function verifyToken(ctx, next) {
 
   // Bearer token认证
   const token = authorization.replace('Bearer ', '')
-
   // 验证token
   try {
     const result = jwt.verify(token, PUBLIC_KEY, {
@@ -64,8 +63,25 @@ async function verifyToken(ctx, next) {
   }
 }
 
+/**
+ * @description 核实用户权限
+ * @param {*} ctx 
+ * @param {*} next 
+ */
+async function verifyPermission(ctx, next) {
+  log.info('开始认证权限~~')
+  const userId = ctx.params.userId
+  const { id } = ctx.request.body
+  if (id != userId) {
+    const error = new Error(errorTypes.UNPERMISSION)
+    return ctx.app.emit('error', error, ctx)
+  }
+  await next()
+}
+
 module.exports = {
   verifyUserLogin,
-  verifyToken
+  verifyToken,
+  verifyPermission
 }
 

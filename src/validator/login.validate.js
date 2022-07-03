@@ -8,7 +8,7 @@ const LOGIN_SCHEMA = {
   properties: {
     userName: {
       type: 'string',
-      pattern: '^[a-zA-Z][a-zA-Z0-9_]+$',
+      pattern: '^[a-zA-Z0-9\u4e00-\u9fa5]+$',
       maxLength: 255,
       minLength: 2
     },
