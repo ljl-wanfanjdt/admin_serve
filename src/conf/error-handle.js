@@ -1,5 +1,5 @@
 const errorTypes = require('../constants/error-types');
-
+const log = require('../conf/log4js.config')
 /**
  * @description 错误处理事件回调函数 Koa 应用扩展了内部 EventEmitter。
  * ctx.app.emit 发出一个类型由第一个参数定义的事件。对于每个事件，您可以连接 "listeners"，
@@ -39,9 +39,9 @@ const errorHandler = (error, ctx) => {
       status = 404;
       message = "NOT FOUND";
   }
-
-  ctx.status = status;
-  ctx.body = message;
+  log.error(`${error.stack}`)
+  ctx.status = status
+  ctx.body = message
 }
 
 module.exports = errorHandler;

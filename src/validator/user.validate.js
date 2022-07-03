@@ -38,6 +38,7 @@ const PASSWORD_SCHEMA = {
   },
   required: ['password']
 }
+
 /**
  * @description 校验用户信息
  * @author ljl
@@ -53,10 +54,10 @@ function userValidator(data = {}) {
  * @author mllms
  * @param {object} data 用户信息
  */
-
 function passwordValidator(data = {}) {
   return validator(PASSWORD_SCHEMA, data)
 }
+
 module.exports = {
   userValidator,
   passwordValidator

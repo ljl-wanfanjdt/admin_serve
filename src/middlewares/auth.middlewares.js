@@ -1,6 +1,15 @@
+const jwt = require('jsonwebtoken')
 const { getUserName } = require('../services/user.service')
 const errorTypes = require('../constants/error-types')
 const handlePassword = require('../utils/password.encrypt')
+const log = require('../conf/log4js.config')
+const { PUBLIC_KEY } = require('../conf/config')
+/**
+ * @description 登录信息校验
+ * @param {*} ctx 
+ * @param {*} next 
+ * @returns 
+ */
 async function verifyUserLogin(ctx, next) {
   const { userName, password } = ctx.request.body
 
@@ -24,7 +33,39 @@ async function verifyUserLogin(ctx, next) {
   await next();
 }
 
+
+/**
+ * @description token认证
+ * @param {*} ctx 
+ * @param {*} next 
+ */
+async function verifyToken(ctx, next) {
+  log.info('开始验证授权token')
+  const authorization = ctx.headers.authorization
+  if (!authorization) {
+    const error = new Error(errorTypes.UNAUTHORIZATION)
+    return ctx.app.emit('error', error, ctx)
+  }
+
+  // Bearer token认证
+  const token = authorization.replace('Bearer ', '')
+
+  // 验证token
+  try {
+    const result = jwt.verify(token, PUBLIC_KEY, {
+      algorithms: ["RS256"]
+    })
+    ctx.user = result
+    log.info('认证成功')
+    await next()
+  } catch (err) {
+    const error = new Error(errorTypes.UNAUTHORIZATION)
+    return ctx.app.emit('error', error, ctx)
+  }
+}
+
 module.exports = {
-  verifyUserLogin
+  verifyUserLogin,
+  verifyToken
 }
 

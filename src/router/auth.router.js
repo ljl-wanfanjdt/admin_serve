@@ -2,11 +2,12 @@ const Router = require('koa-router')
 const authRouter = new Router()
 
 const getValidator = require('../middlewares/validate.middlewares')
-const { loginValidator } = require('../validator/user.validate')
+const { loginValidator } = require('../validator/login.validate')
 
 const { verifyUserLogin } = require('../middlewares/auth.middlewares')
 
 const { login } = require('../controller/auth.controller')
+
 // 登录路由
 /* 
     登录逻辑

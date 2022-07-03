@@ -5,9 +5,11 @@ const fs = require('fs')
 dotenv.config()
 
 
-// 读取秘钥
-
+// 读取私秘钥
 const PRIVATE_KEY = fs.readFileSync(path.resolve(__dirname, './keys/private.key'))
+
+// 读取公秘钥
+const PUBLIC_KEY = fs.readFileSync(path.resolve(__dirname, './keys/public.key'))
 module.exports = {
   APP_HOST,
   APP_PORT,
@@ -18,3 +20,4 @@ module.exports = {
 } = process.env
 
 module.exports.PRIVATE_KEY = PRIVATE_KEY
+module.exports.PUBLIC_KEY = PUBLIC_KEY

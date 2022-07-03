@@ -5,6 +5,7 @@ const getValidator = require('../middlewares/validate.middlewares')
 const { userValidator, passwordValidator } = require('../validator/user.validate')
 const { create, queryUserList, ChangePassword, userDisable } = require('../controller/user.controller')
 const { verifyRepregister, cryptPassword, verifyPassword, VerifyNewPassword } = require('../middlewares/user.middlewares')
+const { verifyToken } = require('../middlewares/auth.middlewares')
 userRouter.post('/', (ctx, next) => {
 
 })
@@ -45,6 +46,6 @@ userRouter.post('/reset/pasword', cryptPassword, ChangePassword)
 userRouter.post('/disable', userDisable)
 
 // 获取用户列表
-userRouter.post('/getUserList', queryUserList)
+userRouter.post('/getUserList', verifyToken, queryUserList)
 
 module.exports = userRouter

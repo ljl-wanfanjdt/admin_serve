@@ -8,5 +8,5 @@ const log = require('../src/conf/log4js.config')
 
 // 创建服务
 app.listen(config.APP_PORT, () => {
-  log.debug(`服务器已开启---${config.APP_HOST}:${config.APP_PORT}`)
+  log.info(`服务器已开启---${config.APP_HOST}:${config.APP_PORT}`)
 })
