@@ -1,6 +1,5 @@
-const connection = require('../conf/database')
-const log = require('../conf/log4js.config')
 const { pageHandle } = require('../utils/index')
+const service = require('../services/service')
 // const [rows, fields] = await connection.execute('SELECT * FROM `table` WHERE `name` = ? AND `age` > ?', ['Morty', 14]);
 
 class UserService {
@@ -11,7 +10,7 @@ class UserService {
    */
   async getUserName(name) {
     const statement = `SELECT * FROM user_info WHERE user_name = ?; `
-    return executeSql(statement, [name])
+    return service.executeSql(statement, [name])
   }
 
   /**
@@ -26,7 +25,7 @@ class UserService {
       user_info (user_name,password,age,tel_phone,gender,full_name) 
     VALUES 
       (?,?,?,?,?,?);`
-    return executeSql(statement, [user_name, password, age, tel_phone, gender, full_name])
+    return service.executeSql(statement, [user_name, password, age, tel_phone, gender, full_name])
   }
 
   /**
@@ -59,7 +58,7 @@ class UserService {
 
     //分页创建时间倒序返回
     statement += ` ORDER BY create_time DESC LIMIT ${pageHandle(currentPage, pageSize)}, ${pageSize}`
-    return handleSql(statement)
+    return service.handleSql(statement)
   }
 
   /**
@@ -69,7 +68,7 @@ class UserService {
   async getPassword(params) {
     const { userName } = params
     let statement = `SELECT password FROM user_info WHERE user_name = ?;`
-    return executeSql(statement, [userName])
+    return service.executeSql(statement, [userName])
   }
 
   /**
@@ -79,17 +78,17 @@ class UserService {
   async setPassword(params) {
     const { userName, password, userId } = params
     let statement = `UPDATE user_info SET password = ? WHERE user_name = '${userName}' AND id=${userId};`
-    return executeSql(statement, [password])
+    return service.executeSql(statement, [password])
   }
 
   /**
- * @description 设置用户密码
+ * @description 设置用户
  * @returns 数据库操作结果
  */
   async disableUser(params) {
     const { userName, disable, userId } = params
     let statement = `UPDATE user_info SET disable = ? WHERE user_name = '${userName}' AND id=${userId};`
-    return executeSql(statement, [disable])
+    return service.executeSql(statement, [disable])
   }
 
   /**
@@ -109,39 +108,10 @@ class UserService {
       gender = ?,
       disable = ? WHERE id = ?
     `
-    return executeSql(statement, [userName, age, fullName, telPhone, gender, disable, id])
+    return service.executeSql(statement, [userName, age, fullName, telPhone, gender, disable, id])
   }
 }
 
-/**
- * @description 数据库sql操作封装
- * @author ljl
- * @param {*} sql 要执行的sql预编译语句
- * @param {*} data sql语句填充条件
- * @returns 数据库操作结果
- */
-async function executeSql(sql, data) {
-  try {
-    const request = await connection.execute(sql, data)
-    return request[0]
-  } catch (error) {
-    log.error(error)
-  }
-}
 
-/**
- * @description 数据库sql操作封装,不进行预编译,预编译可选参数将报错,所以采取此方法
- * @author ljl
- * @param {*} sql 要执行的sql语句
- * @returns 数据库操作结果
- */
-async function handleSql(sql) {
-  try {
-    const request = await connection.query(sql)
-    return request[0]
-  } catch (error) {
-    log.error(error)
-  }
-}
 
 module.exports = new UserService()
