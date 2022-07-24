@@ -3,8 +3,9 @@ const userRouter = new Router({ prefix: '/user' })
 
 const getValidator = require('../middlewares/validate.middlewares')
 const { userValidator, passwordValidator } = require('../validator/user.validate')
-const { create, queryUserList, ChangePassword, userDisable } = require('../controller/user.controller')
+const { create, queryUserList, ChangePassword, userDisable, modifyUserInfo } = require('../controller/user.controller')
 const { verifyRepregister, cryptPassword, verifyPassword, VerifyNewPassword } = require('../middlewares/user.middlewares')
+const { verifyToken, verifyPermission } = require('../middlewares/auth.middlewares')
 userRouter.post('/', (ctx, next) => {
 
 })
@@ -33,7 +34,7 @@ userRouter.post('/modify/userPasword', cryptPassword, verifyPassword, getValidat
 *"userId"
 *"password" 此处password为默认密码
 */
-userRouter.post('/reset/pasword', cryptPassword, ChangePassword)
+userRouter.post('/reset/pasword',verifyToken, verifyPermission, cryptPassword, ChangePassword)
 
 // 用户开启/禁用开关路由
 /*
@@ -42,9 +43,20 @@ userRouter.post('/reset/pasword', cryptPassword, ChangePassword)
 *"userId"
 *"disable" 
 */
-userRouter.post('/disable', userDisable)
+userRouter.post('/disable',verifyToken, verifyPermission, userDisable)
 
-// 获取用户列表
-userRouter.post('/getUserList', queryUserList)
+/* 
+  获取用户列表
+  next--核实是否登录
+  next--获取用户列表
+*/
+userRouter.post('/getUserList', verifyToken, queryUserList)
 
+/*
+  修改用户信息
+  next--核实是否登录
+  next--核实是否拥有权限(管理员,当前登录用户本身拥有权限)
+  next--修改用户信息
+*/
+userRouter.patch('/modifyUserInfo/:userId', verifyToken, verifyPermission, modifyUserInfo)
 module.exports = userRouter

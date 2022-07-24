@@ -1,7 +1,7 @@
 /**
  * @description 用户 controller    
  */
-const { createUser, queryUser, setPassword, disableUser } = require('../services/user.service')
+const { createUser, queryUser, setPassword, disableUser, updateInfo } = require('../services/user.service')
 class UserController {
   async create(ctx, next) {
     const userInfo = ctx.request.body
@@ -10,7 +10,12 @@ class UserController {
     ctx.body = result
   }
 
-  // 查询用户列表
+  /**
+   * @description 查询用户列表
+   * @author ljl
+   * @param {*} ctx 
+   * @param {*} next 
+   */
   async queryUserList(ctx, next) {
     const queryParams = ctx.request.body
     const result = await queryUser(queryParams)
@@ -39,6 +44,17 @@ class UserController {
     } else {
       ctx.body = "操作失败"
     }
+  }
+
+  /**
+   * @description 编辑用户信息
+   * @param {*} ctx 
+   * @param {*} next 
+   */
+  async modifyUserInfo(ctx, next) {
+    // 权限认证通过
+    const result = await updateInfo(ctx.request.body)
+    ctx.body = result
   }
 }
 

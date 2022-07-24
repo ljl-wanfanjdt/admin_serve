@@ -8,7 +8,7 @@ const USER_SCHEMA = {
   properties: {
     userName: {
       type: 'string',
-      pattern: '^[a-zA-Z][a-zA-Z0-9_]+$', //字母开头,字母下划线数字组成
+      pattern: '^[a-zA-Z0-9\u4e00-\u9fa5]+$', //字母开头,字母下划线数字组成
       maxLength: 255,
       minLength: 2
     },
@@ -38,6 +38,7 @@ const PASSWORD_SCHEMA = {
   },
   required: ['password']
 }
+
 /**
  * @description 校验用户信息
  * @author ljl
@@ -53,10 +54,10 @@ function userValidator(data = {}) {
  * @author mllms
  * @param {object} data 用户信息
  */
-
 function passwordValidator(data = {}) {
   return validator(PASSWORD_SCHEMA, data)
 }
+
 module.exports = {
   userValidator,
   passwordValidator
