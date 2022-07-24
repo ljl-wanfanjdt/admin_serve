@@ -13,6 +13,7 @@ async function executeSql(sql, data) {
     return request[0]
   } catch (error) {
     log.error(error)
+    return Promise.resolve(['error', []])
   }
 }
 
@@ -32,6 +33,6 @@ async function handleSql(sql) {
 }
 
 module.exports = {
-    executeSql,
-    handleSql
+  executeSql,
+  handleSql
 }

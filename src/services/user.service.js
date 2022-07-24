@@ -10,7 +10,7 @@ class UserService {
    */
   async getUserName(name) {
     const statement = `SELECT * FROM user_info WHERE user_name = ?; `
-    return service.executeSql(statement, [name])
+    return await service.executeSql(statement, [name])
   }
 
   /**
@@ -25,7 +25,7 @@ class UserService {
       user_info (user_name,password,age,tel_phone,gender,full_name) 
     VALUES 
       (?,?,?,?,?,?);`
-    return service.executeSql(statement, [user_name, password, age, tel_phone, gender, full_name])
+    return await service.executeSql(statement, [user_name, password, age, tel_phone, gender, full_name])
   }
 
   /**
@@ -58,7 +58,7 @@ class UserService {
 
     //分页创建时间倒序返回
     statement += ` ORDER BY create_time DESC LIMIT ${pageHandle(currentPage, pageSize)}, ${pageSize}`
-    return service.handleSql(statement)
+    return await service.handleSql(statement)
   }
 
   /**
@@ -68,7 +68,7 @@ class UserService {
   async getPassword(params) {
     const { userName } = params
     let statement = `SELECT password FROM user_info WHERE user_name = ?;`
-    return service.executeSql(statement, [userName])
+    return await service.executeSql(statement, [userName])
   }
 
   /**
@@ -78,7 +78,7 @@ class UserService {
   async setPassword(params) {
     const { userName, password, userId } = params
     let statement = `UPDATE user_info SET password = ? WHERE user_name = '${userName}' AND id=${userId};`
-    return service.executeSql(statement, [password])
+    return await service.executeSql(statement, [password])
   }
 
   /**
@@ -88,7 +88,7 @@ class UserService {
   async disableUser(params) {
     const { userName, disable, userId } = params
     let statement = `UPDATE user_info SET disable = ? WHERE user_name = '${userName}' AND id=${userId};`
-    return service.executeSql(statement, [disable])
+    return await service.executeSql(statement, [disable])
   }
 
   /**
@@ -108,7 +108,7 @@ class UserService {
       gender = ?,
       disable = ? WHERE id = ?
     `
-    return service.executeSql(statement, [userName, age, fullName, telPhone, gender, disable, id])
+    return await service.executeSql(statement, [userName, age, fullName, telPhone, gender, disable, id])
   }
 }
 
