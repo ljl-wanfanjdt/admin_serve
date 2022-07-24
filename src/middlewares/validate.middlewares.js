@@ -1,5 +1,5 @@
 /**
- * @description 检验数据中间件
+ * @description 检验数据中间件封装
  * @author ljl
  * @param {function} fn 校验函数
  * @return {function} 中间件函数

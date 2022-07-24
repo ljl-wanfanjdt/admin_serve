@@ -72,6 +72,7 @@ async function verifyPermission(ctx, next) {
   log.info('开始认证权限~~')
   const userId = ctx.params.userId
   const { id } = ctx.request.body
+  // 这里可以放开管理修改的权限
   if (id != userId) {
     const error = new Error(errorTypes.UNPERMISSION)
     return ctx.app.emit('error', error, ctx)
