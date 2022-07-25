@@ -54,6 +54,7 @@ async function verifyToken(ctx, next) {
     const result = jwt.verify(token, PUBLIC_KEY, {
       algorithms: ["RS256"]
     })
+    // 不走登录的中间件 可以拿到用户信息
     ctx.user = result
     log.info('认证成功')
     await next()

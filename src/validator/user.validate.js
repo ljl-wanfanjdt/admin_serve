@@ -8,7 +8,7 @@ const USER_SCHEMA = {
   properties: {
     userName: {
       type: 'string',
-      pattern: '^[a-zA-Z0-9\u4e00-\u9fa5]+$', //字母开头,字母下划线数字组成
+      pattern: '^[a-zA-Z0-9\u4e00-\u9fa5_]+$', //字母开头,字母下划线数字组成
       maxLength: 255,
       minLength: 2
     },

@@ -34,7 +34,7 @@ userRouter.post('/modify/userPasword', cryptPassword, verifyPassword, getValidat
 *"userId"
 *"password" 此处password为默认密码
 */
-userRouter.post('/reset/pasword',verifyToken, verifyPermission, cryptPassword, ChangePassword)
+userRouter.post('/reset/pasword', verifyToken, verifyPermission, cryptPassword, ChangePassword)
 
 // 用户开启/禁用开关路由
 /*
@@ -43,7 +43,7 @@ userRouter.post('/reset/pasword',verifyToken, verifyPermission, cryptPassword, C
 *"userId"
 *"disable" 
 */
-userRouter.post('/disable',verifyToken, verifyPermission, userDisable)
+userRouter.post('/disable', verifyToken, verifyPermission, userDisable)
 
 /* 
   获取用户列表
